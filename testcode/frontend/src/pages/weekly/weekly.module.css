@@ -1,0 +1,50 @@
+/* styles/WeeklyReportPage.module.css */
+  
+  .btn {
+    font-size: 1rem; /* シンプルで洗練されたサイズ */
+    margin-right: 1rem; /* より洗練された間隔 */
+    background-color: #0A9396;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px; /* やや丸みを帯びた形状 */
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #94D2BD; /* ホバー時の色 */
+  }
+  
+
+
+.navbar {
+    background-color: #ffffff; /* bg-base-100 に相当する色 */
+  }
+  
+
+  .card {
+    background-color: #FFFFFF; /* カードの背景色 */
+    border-radius: 12px; /* 角の丸み */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 影の設定 */
+    padding: 2rem; /* 内側の余白 */
+    max-width: 600px; /* 最大幅 */
+    width: 100%; /* 幅 */
+  }
+  
+  
+  .progressBarContainer {
+    width: 100%; /* コンテナの幅 */
+    background-color: #E0E0E0; /* 背景色 */
+    border-radius: 9999px; /* 丸みを極端に */
+    overflow: hidden; /* 内部要素がはみ出さないように */
+    margin-bottom: 2rem; /* 下の余白 */
+  }
+  
+  .progressBar {
+    width: 40%; /* プログレスの幅 */
+    background: linear-gradient(90deg, #008BC2 0%, #69BA50 100%); /* グラデーションの設定 */
+    text-align: center; /* テキストの位置 */
+    line-height: 2rem; /* ラインの高さ */
+    color: white; /* テキストの色 */
+  }
+  
+  
