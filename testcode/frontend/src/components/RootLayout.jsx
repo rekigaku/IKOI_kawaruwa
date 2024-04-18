@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <header className={`navbar ${styles.navbar}`}>
         <div className="navbar-start">
           <div className="ml-4 lg:ml-12">
-            <Image src="/ikoi.png" alt="IKOI logo" width={150} height={50} />
+            <Image src="/kawaruwa.png" alt="kawaruwa logo" width={150} height={50} />
           </div>
         </div>
         <div className="navbar-end">

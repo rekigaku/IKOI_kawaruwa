@@ -41,7 +41,7 @@
   
   .progressBar {
     width: 40%; /* プログレスの幅 */
-    background: linear-gradient(90deg, #008BC2 0%, #69BA50 100%); /* グラデーションの設定 */
+    background: linear-gradient(90deg, #948bbd 0%, #5ba5eb 100%); /* グラデーションの設定 */
     text-align: center; /* テキストの位置 */
     line-height: 2rem; /* ラインの高さ */
     color: white; /* テキストの色 */
