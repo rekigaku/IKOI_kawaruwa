@@ -11,7 +11,7 @@ const WeeklyReportPage = () => {
           <p className="text-center text-xl mb-6">【今週の強化アクション】</p>
           <p className="text-center mt-4 text-2xl font-bold pt-50 mb-10">遮らずに相手の話を聞こう</p>
           <div className={styles.progressBarContainer}>
-            <div className={`${styles.progressBar}`} style={{ width: '40%' }}>
+            <div className={`${styles.progressBar}`} style={{ width: '60%' }}>
               40%
             </div>
           </div>

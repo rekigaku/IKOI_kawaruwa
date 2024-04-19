@@ -33,6 +33,7 @@ class Actions(Base):
     action_id = Column(String, primary_key=True)
     action_name = Column(String)
     action_category_id = Column(String, ForeignKey('action_categories_master.action_category_id'))
+    feedback = Column(String)  #山脇追加　中野さんに要確認
 
 class Records(Base):
     __tablename__ = 'records'

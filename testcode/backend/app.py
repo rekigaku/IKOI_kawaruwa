@@ -17,6 +17,7 @@ def index():
 
 # employee_idとrecord_dateの期間を指定することで、特定の人、期間のrecordsデータを返すAPI
 # 山脇変更　get_records ⇒　get_filterd_recordsに変更
+# Weekly/Dailyのカウントで活用　action_nameをカウント
 @app.route('/get_filtered_records', methods=['POST'])
 def get_records():
     if not request.is_json:
@@ -40,7 +41,8 @@ def get_records():
         return jsonify({'error': 'No records found for the provided employee ID and date range'}), 404
 
 # employee_idを指定することで、その人のrecordsが表示されるAPI
-#山脇変更　get_action_date ⇒　get_filterd_actions
+#山脇変更　get_action_date ⇒　get_filterd_actions　
+# action_name/category_name/posiotn_name 出力　　//山脇未使用
 @app.route('/get_filtered_actions', methods=['POST'])
 def get_action_data():
     if not request.is_json:
@@ -62,6 +64,7 @@ def get_action_data():
 
 
 # employee_idとrecord_dateとaction_idを渡すことで、recordsテーブルにデータを追加するAPI
+# front_end データ入力画面で活用　山脇
 @app.route('/add_new_record', methods=['POST'])
 def add_records():
     data = request.get_json()
