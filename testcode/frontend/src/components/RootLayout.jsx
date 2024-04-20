@@ -27,7 +27,10 @@ export default function RootLayout({ children }) {
             <button className="btn text-lg mr-7">記録する</button>
           </Link>
           <Link href="/weekly" passHref>
-            <button className="btn btn-active btn-primary text-lg mr-7 text-white">レポートをみる</button>
+            <button className="btn btn-active btn-primary text-lg mr-7 text-white">Weekly Report</button>
+          </Link>
+          <Link href="/daily" passHref>
+            <button className="btn btn-active btn-primary text-lg mr-7 text-white">Daily Report</button>
           </Link>
         </div>
       </header>

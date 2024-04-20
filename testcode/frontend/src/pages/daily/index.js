@@ -47,6 +47,8 @@ const EmployeeRecordsComponent = () => {
     await fetchEmployeeRecords(employeeId);
   };
 
+  
+  
   return (
     <div className="container mx-auto px-4">
       <h2 className="text-3xl font-semibold text-gray-800 mb-4 mt-20">今日のアクション振り返り</h2>

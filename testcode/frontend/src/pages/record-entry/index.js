@@ -11,10 +11,10 @@ const actionLabels = {
   'act_8': 'あいづちを打ってくれた',
   'act_9': '目をみて話してくれた',
   'act_10': '質問をしてくれた',
-  'act_11': 'あいさつした',
-  'act_12': '笑顔で接した',
-  'act_13': 'あいづちを打った',
-  'act_14': '目をみて話した',
+  'act_11': '  あいさつした  ',
+  'act_12': '  笑顔で接した  ',
+  'act_13': ' あいづちを打った ',
+  'act_14': ' 目をみて話した ',
   'act_15': '質問をした',
   'act_16': '挨拶をしてくれた',
   'act_17': '笑顔で接してくれた',
@@ -30,7 +30,7 @@ const getActionLabel = (actionId) => {
 
 const ActionButton = ({ actionId, onClick }) => (
   <button
-    className="bg-teal-400 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+    className="bg-cyan-600 hover:bg-cyan-400 text-white font-bold py-2 px-4 rounded"
     type="button"
     onClick={() => onClick(actionId)}
   >
@@ -128,9 +128,9 @@ return (
       </>
     ) : (
       <>
-        <ActionSection title={isEmployeeLeader ? '上司へのアクション' : '部下へのアクション'} actionIds={isEmployeeLeader ? actionIdsForLeaders : actionIdsForEmployeeFive} handleClick={handleActionClick} bgColor="bg-teal-50" />
+        <ActionSection title={isEmployeeLeader ? '上司へのアクション' : '部下へのアクション'} actionIds={isEmployeeLeader ? actionIdsForLeaders : actionIdsForEmployeeFive} handleClick={handleActionClick} bgColor="bg-zinc-50" />
         <div className="my-6"></div> {/* ここでセクションの間隔を設けています */}
-        <ActionSection title={isEmployeeLeader ? '上司からのアクション' : '部下からのアクション'} actionIds={isEmployeeLeader ? actionIdsFromSubordinates : actionIdsFromEmployeeFive} handleClick={handleActionClick} bgColor="bg-teal-50" />
+        <ActionSection title={isEmployeeLeader ? '上司からのアクション' : '部下からのアクション'} actionIds={isEmployeeLeader ? actionIdsFromSubordinates : actionIdsFromEmployeeFive} handleClick={handleActionClick} bgColor="bg-zinc-50" />
       </>
     )}
 
