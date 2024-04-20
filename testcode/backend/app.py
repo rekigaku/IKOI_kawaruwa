@@ -4,7 +4,9 @@ from flask_cors import CORS
 import requests
 from db_control import mymodels, crud
 from datetime import datetime
+from sqlalchemy.exc import DBAPIError
 
+#上記の下から2行山脇追加
 
 # Flaskアプリのインスタンスを生成。CORSによって、異なるドメインからのappへのリクエストを許可。
 app = Flask(__name__)
@@ -19,7 +21,7 @@ def index():
 # 山脇変更　get_records ⇒　get_filterd_recordsに変更
 # Weekly/Dailyのカウントで活用　action_nameをカウント
 @app.route('/get_filtered_records', methods=['POST'])
-def get_records():
+def get_filtered_records():
     if not request.is_json:
         return jsonify({"error": "Request must be JSON"}), 400
 
@@ -107,6 +109,30 @@ def login():
         return jsonify({"employee_id": employee.employee_id, "employee_name": employee.employee_name, "email": employee.email}), 200
     else:
         return jsonify({"error": "Invalid email or password"}), 401
+
+#Daily Report接続用のAPI　POSTで設定　///山脇追加分   //動作確認済
+@app.route('/get_daily_records', methods=['POST'])
+def get_daily_records():
+    data = request.get_json()
+    employee_id = data.get('employee_id')
+
+    # crudモジュールの関数を呼び出します。関数名を確認してください。
+    try:
+        result = crud.get_records_for_employee(employee_id)  
+        
+        # 結果を辞書のリストとして整形
+        result_dict_list = [{
+            "record_date": record.record_date.strftime('%Y-%m-%d'),
+            "action_name": action.action_name,
+            "action_id": action.action_id,
+            "feedback": action.feedback
+        } for record, action in result]
+
+        # 結果をJSONで返す
+        return jsonify(result_dict_list)
+
+    except DBAPIError as e:
+        return jsonify({"error": str(e)}), 500
 
 
 

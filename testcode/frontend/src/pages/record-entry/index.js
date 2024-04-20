@@ -39,17 +39,23 @@ const ActionButton = ({ actionId, onClick }) => (
 );
 
 
-
 export default function ActionPage() {
   const [employeeId, setEmployeeId] = useState('');
   const [selectedActions, setSelectedActions] = useState([]);
-  const [message, setMessage] = useState(''); // メッセージ用の新しいステート
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState(''); // エラーメッセージ用の状態を追加
 
   const handleActionClick = (actionId) => {
     setSelectedActions([...selectedActions, actionId]);
   };
 
   const handleSubmit = async () => {
+    if (!employeeId.trim()) {
+      setError('Employee ID is required.'); // employee_idが空の場合、エラーメッセージを設定
+      setTimeout(() => setError(''), 5000); // 5秒後にエラーメッセージを消去
+      return; // ここで送信処理を中断
+    }
+
     const recordDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD format
     try {
       const response = await fetch('/api/add_new_record', {
@@ -85,84 +91,66 @@ export default function ActionPage() {
   const actionIdsForEmployeeFive = ['act_1', 'act_2', 'act_3', 'act_4', 'act_5'];
   const actionIdsFromEmployeeFive = ['act_6', 'act_7', 'act_8', 'act_9', 'act_10'];
 
-  return (
-    <div className="max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-lg p-5">
-      <div className="form-control">
-        <input
-          className="input input-bordered w-full"
-          type="text"
-          value={employeeId}
-          onChange={(e) => setEmployeeId(e.target.value)}
-          placeholder="Enter employee ID"
-        />
+
+  // ActionSection コンポーネントを新しく作成し、背景色のプロパティを追加
+const ActionSection = ({ title, actionIds, handleClick, bgColor = 'bg-white' }) => (
+  <div className={`${bgColor} p-4 rounded-lg shadow-sm`}>
+    <div className="flex flex-col items-start">
+      <h2 className="text-lg font-semibold mb-2 text-gray-700">{title}</h2>
+      <div className="grid grid-cols-2 gap-2">
+        {actionIds.map((actionId) => (
+          // ここに 'w-full' を追加してボタンの幅を統一します
+          <ActionButton key={actionId} actionId={actionId} onClick={handleClick} className="btn btn-outline btn-accent btn-block w-full" />
+        ))}
       </div>
-  
-      <div className="divider">入力コードは消す予定</div>
-  
-      {isEmployeeFive ? (
-        <div className="space-y-4">
-          <div className="flex flex-col items-start">
-            <h2 className="text-lg font-semibold mb-2 text-gray-700">部下へのアクション</h2>
-            <div className="grid grid-cols-2 gap-2">
-              {actionIdsForEmployeeFive.map((actionId) => (
-                <ActionButton key={actionId} actionId={actionId} onClick={handleActionClick} className="btn btn-outline btn-accent btn-block" />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col items-start">
-            <h2 className="text-lg font-semibold mb-2 text-gray-700 mt-10">部下からのアクション</h2>
-            <div className="grid grid-cols-2 gap-2">
-              {actionIdsFromEmployeeFive.map((actionId) => (
-                <ActionButton key={actionId} actionId={actionId} onClick={handleActionClick} className="btn btn-outline btn-accent btn-block" />
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        
-        
-        <div className="space-y-4">
-          <div className="flex flex-col items-start">
-            <h2 className="text-lg font-semibold mb-2 text-gray-700">{isEmployeeLeader ? '上司へのアクション' : '部下へのアクション'}</h2>
-            <div className="grid grid-cols-2 gap-2">
-              {(isEmployeeLeader ? actionIdsForLeaders : actionIdsForEmployeeFive).map((actionId) => (
-                <ActionButton key={actionId} actionId={actionId} onClick={handleActionClick} className="btn btn-outline btn-accent btn-block" />
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col items-start">
-            <h2 className="text-lg font-semibold mb-2 text-gray-700 mt-10">{isEmployeeLeader ? '上司からのアクション' : '部下からのアクション'}</h2>
-            <div className="grid grid-cols-2 gap-2">
-              {(isEmployeeLeader ? actionIdsFromSubordinates : actionIdsFromEmployeeFive).map((actionId) => (
-                <ActionButton key={actionId} actionId={actionId} onClick={handleActionClick} className="btn btn-outline btn-accent btn-block" />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-  
-        <div className="flex justify-center items-center mt-8">
-          <button
-            className="btn btn-primary btn-block text-xl text-white"
-            type="button"
-            onClick={handleSubmit}
-          >
-            登録する
-          </button> 
-        </div>
-
-         {/* メッセージ表示部分 */}
-      {message && (
-        <div className="text-center p-2 my-2 bg-blue-100 text-blue-800 rounded">
-          {message}
-        </div>
-      )}
-
     </div>
-  );
-  
- 
+  </div>
+);
 
-  
+return (
+  <div className="max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-lg p-5">
+    <div className="form-control mb-4">
+      <input
+        className="input input-bordered w-full"
+        type="text"
+        value={employeeId}
+        onChange={(e) => setEmployeeId(e.target.value)}
+        placeholder="Enter employee ID"
+      />
+      {error && <p className="text-red-500">{error}</p>}
+    </div>
+
+    {isEmployeeFive ? (
+      <>
+        <ActionSection title="部下へのアクション" actionIds={actionIdsForEmployeeFive} handleClick={handleActionClick} bgColor="bg-gray-50" />
+        <div className="my-6"></div> {/* ここでセクションの間隔を設けています */}
+        <ActionSection title="部下からのアクション" actionIds={actionIdsFromEmployeeFive} handleClick={handleActionClick} bgColor="bg-gray-50" />
+      </>
+    ) : (
+      <>
+        <ActionSection title={isEmployeeLeader ? '上司へのアクション' : '部下へのアクション'} actionIds={isEmployeeLeader ? actionIdsForLeaders : actionIdsForEmployeeFive} handleClick={handleActionClick} bgColor="bg-teal-50" />
+        <div className="my-6"></div> {/* ここでセクションの間隔を設けています */}
+        <ActionSection title={isEmployeeLeader ? '上司からのアクション' : '部下からのアクション'} actionIds={isEmployeeLeader ? actionIdsFromSubordinates : actionIdsFromEmployeeFive} handleClick={handleActionClick} bgColor="bg-teal-50" />
+      </>
+    )}
+
+    <div className="flex justify-center items-center mt-8">
+      <button
+        className="btn btn-primary btn-active btn-block text-xl text-white"
+        type="button"
+        onClick={handleSubmit}
+      >
+        登録する
+      </button>
+    </div>
+
+    {message && (
+      <div className="text-center p-2 my-2 bg-blue-100 text-blue-800 rounded">
+        {message}
+      </div>
+    )}
+
+  </div>
+);
+
 }

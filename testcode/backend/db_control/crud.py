@@ -177,3 +177,22 @@ def get_actions_by_employee_position(employee_id):
     finally:
         # セッションを閉じる
         session.close()
+
+#山脇追加        
+def get_records_for_employee(employee_id):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    try:
+        today = date.today()
+        query = session.query(Records, Actions) \
+            .join(Actions, Records.action_id == Actions.action_id) \
+            .filter(Records.employee_id == employee_id) \
+            .filter(Records.record_date == today)
+
+        result = query.all()
+        session.close()
+        return result
+
+    except DBAPIError as e:
+        session.close()
+        raise

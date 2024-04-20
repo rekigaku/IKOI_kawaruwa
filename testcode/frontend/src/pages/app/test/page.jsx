@@ -39,16 +39,23 @@ const ActionButton = ({ actionId, onClick }) => (
 );
 
 
-
 export default function ActionPage() {
   const [employeeId, setEmployeeId] = useState('');
   const [selectedActions, setSelectedActions] = useState([]);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState(''); // エラーメッセージ用の状態を追加
 
   const handleActionClick = (actionId) => {
     setSelectedActions([...selectedActions, actionId]);
   };
 
   const handleSubmit = async () => {
+    if (!employeeId.trim()) {
+      setError('Employee ID is required.'); // employee_idが空の場合、エラーメッセージを設定
+      setTimeout(() => setError(''), 5000); // 5秒後にエラーメッセージを消去
+      return; // ここで送信処理を中断
+    }
+
     const recordDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD format
     try {
       const response = await fetch('/api/add_new_record', {
@@ -64,14 +71,16 @@ export default function ActionPage() {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log('Data submitted successfully', data);
+        setMessage('データ送信 成功しました');
         setSelectedActions([]);
-        // setEmployeeId(''); // Uncomment this line if you also want to reset employeeId
+        setTimeout(() => setMessage(''), 5000); // 5秒後にメッセージを消去
       } else {
-        console.error('Submission failed', data);
+        setMessage('送信失敗: ' + data.message);
+        setTimeout(() => setMessage(''), 5000); // エラーの場合
       }
     } catch (error) {
-      console.error('Error submitting data', error);
+      setMessage('送信エラー: ' + error.toString());
+      setTimeout(() => setMessage(''), 5000);
     }
   };
 
@@ -84,17 +93,19 @@ export default function ActionPage() {
 
   return (
     <div className="max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-lg p-5">
-      <div className="form-control">
-        <input
-          className="input input-bordered w-full"
-          type="text"
-          value={employeeId}
-          onChange={(e) => setEmployeeId(e.target.value)}
-          placeholder="Enter employee ID"
-        />
-      </div>
+    <div className="form-control">
+      <input
+        className="input input-bordered w-full"
+        type="text"
+        value={employeeId}
+        onChange={(e) => setEmployeeId(e.target.value)}
+        placeholder="Enter employee ID"
+      />
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* エラーメッセージの表示 */}
+    </div>
+
   
-      <div className="divider">入力コードは消す予定</div>
+      <div className="divider"></div>
   
       {isEmployeeFive ? (
         <div className="space-y-4">
@@ -106,8 +117,9 @@ export default function ActionPage() {
               ))}
             </div>
           </div>
+
           <div className="flex flex-col items-start">
-            <h2 className="text-lg font-semibold mb-2 text-gray-700">部下からのアクション</h2>
+            <h2 className="text-lg font-semibold mb-2 text-gray-700 mt-10">部下からのアクション</h2>
             <div className="grid grid-cols-2 gap-2">
               {actionIdsFromEmployeeFive.map((actionId) => (
                 <ActionButton key={actionId} actionId={actionId} onClick={handleActionClick} className="btn btn-outline btn-accent btn-block" />
@@ -116,6 +128,8 @@ export default function ActionPage() {
           </div>
         </div>
       ) : (
+        
+        
         <div className="space-y-4">
           <div className="flex flex-col items-start">
             <h2 className="text-lg font-semibold mb-2 text-gray-700">{isEmployeeLeader ? '上司へのアクション' : '部下へのアクション'}</h2>
@@ -126,7 +140,7 @@ export default function ActionPage() {
             </div>
           </div>
           <div className="flex flex-col items-start">
-            <h2 className="text-lg font-semibold mb-2 text-gray-700">{isEmployeeLeader ? '上司からのアクション' : '部下からのアクション'}</h2>
+            <h2 className="text-lg font-semibold mb-2 text-gray-700 mt-10">{isEmployeeLeader ? '上司からのアクション' : '部下からのアクション'}</h2>
             <div className="grid grid-cols-2 gap-2">
               {(isEmployeeLeader ? actionIdsFromSubordinates : actionIdsFromEmployeeFive).map((actionId) => (
                 <ActionButton key={actionId} actionId={actionId} onClick={handleActionClick} className="btn btn-outline btn-accent btn-block" />
@@ -138,13 +152,20 @@ export default function ActionPage() {
   
         <div className="flex justify-center items-center mt-8">
           <button
-            className="btn btn-primary btn-block text-xl text-white"
+            className="btn btn-primary btn-active btn-block text-xl text-white"
             type="button"
             onClick={handleSubmit}
           >
             登録する
           </button> 
         </div>
+
+         {/* メッセージ表示部分 */}
+      {message && (
+        <div className="text-center p-2 my-2 bg-blue-100 text-blue-800 rounded">
+          {message}
+        </div>
+      )}
 
     </div>
   );

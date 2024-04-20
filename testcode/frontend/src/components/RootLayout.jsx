@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
             <Image src="/kawaruwa.png" alt="kawaruwa logo" width={150} height={50} />
           </div>
         </div>
+        
         <div className="navbar-end">
           <Link href="/record-entry" passHref>
             <button className="btn text-lg mr-7">記録する</button>

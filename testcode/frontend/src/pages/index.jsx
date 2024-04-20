@@ -1,24 +1,3 @@
-// import Link from 'next/link';
-
-// export default function Home({ posts }) {
-//   return (
-//     <main>
-//       <div className="hero min-h-screen bg-base-200">
-//       <div className="hero-content text-center">
-//       <div className="max-w-md">
-//       <h1 className="text-5xl font-bold bottom-20">KAWARU_WA</h1>
-//       <p className="py-10 text-2xl">小さな行動変容が<br/>組織や社会を変えていく</p>
-      
-//       <Link href="/login" passHref>
-//       <button className="btn btn-active btn-primary text-lg">Get Started</button>
-//       </Link>
-      
-//     </div>
-//   </div>
-// </div>
-//     </main>
-//   );
-// }
 
 import Link from 'next/link';
 import React from 'react';
