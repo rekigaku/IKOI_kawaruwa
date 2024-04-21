@@ -24,13 +24,15 @@ export default function RootLayout({ children }) {
         
         <div className="navbar-end">
           <Link href="/record-entry" passHref>
-            <button className="btn text-lg mr-7">記録する</button>
+            <button className="btn text-base mr-7">Record</button>
           </Link>
-          <Link href="/weekly" passHref>
-            <button className="btn btn-active btn-primary text-lg mr-7 text-white">Weekly Report</button>
-          </Link>
+          
           <Link href="/daily" passHref>
-            <button className="btn btn-active btn-primary text-lg mr-7 text-white">Daily Report</button>
+            <button className="btn btn-active btn-primary text-base mr-7 text-white">Daily Report</button>
+          </Link>
+
+          <Link href="/weekly" passHref>
+            <button className="btn btn-active btn-primary text-base mr-7 text-white">Weekly Report</button>
           </Link>
         </div>
       </header>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import useEmployeeRecords from '../../hooks/useEmployeeRecords';
-import styles from './daily.module.css'; // Import CSS module
 
 const EmployeeRecordsComponent = () => {
   const [employeeId, setEmployeeId] = useState('');

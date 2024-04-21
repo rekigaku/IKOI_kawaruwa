@@ -4,7 +4,7 @@ import useEmployeeRecords from '../../hooks/useEmployeeRecords';
 const EmployeeRecordsComponent = () => {
   const [employeeId, setEmployeeId] = useState('');
   const { records, loading, error, fetchEmployeeRecords } = useEmployeeRecords();
-  const [maxFeedbacks, setMaxFeedbacks] = useState([]); // 名前を正しく変更
+  const [maxFeedbacks, setMaxFeedbacks] = useState([]); 
 
   useEffect(() => {
     if (records.length > 0) {
@@ -41,6 +41,7 @@ const EmployeeRecordsComponent = () => {
     }
   }, [records]);
 
+    // employee_id の入力がないと、登録されず　エラーがでる仕組
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Fetching records for employee:', employeeId);
