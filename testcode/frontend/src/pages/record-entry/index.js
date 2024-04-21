@@ -56,7 +56,9 @@ export default function ActionPage() {
       return; // ここで送信処理を中断
     }
 
-    const recordDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD format
+  
+    //// ユーザーのローカルタイムゾーンを考慮した現在の日付
+    const recordDate = new Date().toLocaleDateString('sv-SE'); // YYYY-MM-DD format
     try {
       const response = await fetch('/api/add_new_record', {
         method: 'POST',

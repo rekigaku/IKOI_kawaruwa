@@ -12,6 +12,8 @@ from datetime import date
 import json
 from db_control.connect import engine
 from db_control.mymodels import Employees, Positions, Records, Actions, Categories
+from datetime import datetime
+import pytz
 
 # app.pyで使用する関数を以下に記載
 # mymodelはmymodels.pyに記載のどのテーブルに対して操作をするかを指定する変数。
@@ -183,7 +185,9 @@ def get_records_for_employee(employee_id):
     Session = sessionmaker(bind=engine)
     session = Session()
     try:
-        today = date.today()
+        # JSTタイムゾーンを設定
+        jst = pytz.timezone('Asia/Tokyo')
+        today = datetime.now(jst).date()
         query = session.query(Records, Actions) \
             .join(Actions, Records.action_id == Actions.action_id) \
             .filter(Records.employee_id == employee_id) \

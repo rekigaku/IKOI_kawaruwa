@@ -4,7 +4,7 @@ import useEmployeeRecords from '../../hooks/useEmployeeRecords';
 const EmployeeRecordsComponent = () => {
   const [employeeId, setEmployeeId] = useState('');
   const { records, loading, error, fetchEmployeeRecords } = useEmployeeRecords();
-  const [maxFeedbacks, setMaxFeedbacks] = useState([]); 
+  const [maxFeedbacks, setMaxFeedbacks] = useState([]); // 名前を正しく変更
 
   useEffect(() => {
     if (records.length > 0) {
@@ -18,7 +18,7 @@ const EmployeeRecordsComponent = () => {
           feedbacks[record.action_id] = record.feedback;
         }
       });
-
+  
       // 最大値を見つける
       let maxCount = 0;
       Object.values(count).forEach(actionCount => {
@@ -26,22 +26,22 @@ const EmployeeRecordsComponent = () => {
           maxCount = actionCount;
         }
       });
-
+  
       // 最大値に等しいカウントを持つすべてのaction_idを見つける
       const maxActionIds = Object.keys(count).filter(actionId => count[actionId] === maxCount);
-
-      // 複数のfeedbackを格納する配列
-      const maxFeedbacks = maxActionIds.map(actionId => feedbacks[actionId]);
-
-      console.log('Max action IDs:', maxActionIds);
-      console.log('Max feedbacks:', maxFeedbacks);
-
-      // 複数のfeedbackをstateにセット
-      setMaxFeedbacks(maxFeedbacks);
+  
+      // 最初の action_id のフィードバックを取得
+      const firstMaxFeedback = feedbacks[maxActionIds[0]];
+  
+      console.log('Max action ID:', maxActionIds[0]);
+      console.log('Max feedback:', firstMaxFeedback);
+  
+      // フィードバックをstateにセット
+      setMaxFeedbacks([firstMaxFeedback]);
     }
   }, [records]);
+  
 
-    // employee_id の入力がないと、登録されず　エラーがでる仕組
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Fetching records for employee:', employeeId);
