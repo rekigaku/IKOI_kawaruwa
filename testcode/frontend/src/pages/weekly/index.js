@@ -28,7 +28,8 @@ export default function ApiViewer() {
 
    return (
     <div className="container mx-auto px-4 py-10">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">Weekly Action Report</h2>
+      <h2 className="text-2xl font-semibold text-gray-900 mb-4">Weekly Action Report</h2>
+      <p CalssName="text-2xl font-bold text-gray-600 mb-10 mt-20">先週のアクション振り返り</p>
       <form onSubmit={handleSubmit} className="mb-8">
         {/* <label htmlFor="employeeId" className="block text-gray-900 text-lg font-medium mb-3">
           Employee ID:
