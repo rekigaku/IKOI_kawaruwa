@@ -49,7 +49,6 @@ const EmployeeRecordsComponent = () => {
   };
 
   
-  
   return (
     <div className="container mx-auto px-4">
       <h2 className="text-3xl font-semibold text-gray-800 mb-4 mt-20">今日のアクション振り返り</h2>
@@ -66,9 +65,9 @@ const EmployeeRecordsComponent = () => {
       {loading && <p className="text-primary">Loading...</p>}
       {error && <p className="text-error">Error: {error}</p>}
       {maxFeedbacks.length > 0 ? (
-        <div className="space-y-2">
+        <div className="space-y-2 p-4 bg-white border rounded shadow">
           {maxFeedbacks.map((feedback, index) => (
-            <p key={index} className="feedback">{feedback}</p>
+            <p key={index} className="feedback text-gray-800">{feedback}</p>
           ))}
         </div>
       ) : (
@@ -76,6 +75,7 @@ const EmployeeRecordsComponent = () => {
       )}
     </div>
   );
+  
 }
 
 export default EmployeeRecordsComponent;
