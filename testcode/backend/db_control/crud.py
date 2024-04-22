@@ -12,8 +12,11 @@ from datetime import date
 import json
 from db_control.connect import engine
 from db_control.mymodels import Employees, Positions, Records, Actions, Categories
-from datetime import datetime
 import pytz
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta, MO
+
+
 
 # app.pyで使用する関数を以下に記載
 # mymodelはmymodels.pyに記載のどのテーブルに対して操作をするかを指定する変数。
@@ -180,7 +183,7 @@ def get_actions_by_employee_position(employee_id):
         # セッションを閉じる
         session.close()
 
-#山脇追加        
+#山脇追加    //Daily Reportに使用    
 def get_records_for_employee(employee_id):
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -198,5 +201,37 @@ def get_records_for_employee(employee_id):
         return result
 
     except DBAPIError as e:
+        session.close()
+        raise
+
+# WeeklyReport　by山脇
+#現在の日付から見て直前の月曜日を計算　その月曜日から5日後（金曜日）の日付を計算
+def get_week_records(employee_id, engine):
+    # セッションの設定
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    try:
+        # JSTタイムゾーンを設定
+        jst = pytz.timezone('Asia/Tokyo')
+        today = datetime.now(jst)
+
+        # 前週の月曜日と金曜日を計算
+        last_week_monday = today + relativedelta(weekday=MO(-1), weeks=-1)
+        last_week_friday = last_week_monday + timedelta(days=4)
+
+        # 期間内のレコードをクエリ
+        query = session.query(Records, Actions) \
+            .join(Actions, Records.action_id == Actions.action_id) \
+            .filter(Records.employee_id == employee_id) \
+            .filter(Records.record_date >= last_week_monday.date()) \
+            .filter(Records.record_date <= last_week_friday.date())
+
+        result = query.all()
+        session.close()
+        return result
+
+    except DBAPIError as e:
+        # エラー時にセッションをクローズ
         session.close()
         raise

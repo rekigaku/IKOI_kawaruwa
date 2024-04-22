@@ -51,7 +51,9 @@ const EmployeeRecordsComponent = () => {
   
   return (
     <div className="container mx-auto px-4">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-4 mt-20">今日のアクション振り返り</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4 mt-20">Today's Action</h2>
+      <p CalssName="text-2xl font-semibold text-gray-800 mb-4 mt-20">今日のアクション振り返り</p>
+
       <form onSubmit={handleSubmit} className="mb-4">
         <input
           type="text"

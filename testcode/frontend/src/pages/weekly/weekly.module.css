@@ -1,37 +1,54 @@
 /* styles/WeeklyReportPage.module.css */
   
-  .btn {
-    font-size: 1rem; /* シンプルで洗練されたサイズ */
-    margin-right: 1rem; /* より洗練された間隔 */
-    background-color: #0A9396;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 5px; /* やや丸みを帯びた形状 */
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn:hover {
-    background-color: #94D2BD; /* ホバー時の色 */
-  }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 0.5rem; /* Added for spacing */
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3178c6;
+  box-shadow: 0 0 0 2px rgba(49, 120, 198, 0.2);
+}
+
+.btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #45a045;
+}
+
+.feedback {
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #3178c6;
+  color: #333;
+  margin: 5px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.feedback:hover {
+  background-color: #f1f1f1;
+}
   
 
-
-.navbar {
-    background-color: #ffffff; /* bg-base-100 に相当する色 */
-  }
-  
-
-  .card {
-    background-color: #FFFFFF; /* カードの背景色 */
-    border-radius: 12px; /* 角の丸み */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 影の設定 */
-    padding: 2rem; /* 内側の余白 */
-    max-width: 600px; /* 最大幅 */
-    width: 100%; /* 幅 */
-  }
   
   
-  .progressBarContainer {
+  .progress-bar-container {
     width: 100%; /* コンテナの幅 */
     background-color: #E0E0E0; /* 背景色 */
     border-radius: 9999px; /* 丸みを極端に */
@@ -39,12 +56,11 @@
     margin-bottom: 2rem; /* 下の余白 */
   }
   
-  .progressBar {
+  .progress-bar {
     width: 40%; /* プログレスの幅 */
-    background: linear-gradient(90deg, #948bbd 0%, #5ba5eb 100%); /* グラデーションの設定 */
+    background: linear-gradient(90deg, #948bbd 50%, #5ba5eb 100%); /* グラデーションの設定 */
     text-align: center; /* テキストの位置 */
     line-height: 2rem; /* ラインの高さ */
     color: white; /* テキストの色 */
+
   }
-  
-  

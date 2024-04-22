@@ -5,8 +5,10 @@ import requests
 from db_control import mymodels, crud
 from datetime import datetime
 from sqlalchemy.exc import DBAPIError
+from sqlalchemy import create_engine
 
-#上記の下から2行山脇追加
+
+#上記の下から3行山脇追加
 
 # Flaskアプリのインスタンスを生成。CORSによって、異なるドメインからのappへのリクエストを許可。
 app = Flask(__name__)
@@ -110,6 +112,32 @@ def login():
     else:
         return jsonify({"error": "Invalid email or password"}), 401
 
+
+engine = create_engine('sqlite:///db_control/IKOI.db')
+
+@app.route('/get_weekly_records', methods=['POST'])
+def get_weekly_records():
+    data = request.get_json()
+    employee_id = data.get('employee_id')
+
+    # crudモジュールの週間レコード取得関数を呼び出します
+    try:
+        result = crud.get_week_records(employee_id, engine)  # engine引数を追加
+        
+        # 結果を辞書のリストとして整形
+        result_dict_list = [{
+            "record_date": record.Records.record_date.strftime('%Y-%m-%d'),
+            "action_name": record.Actions.action_name,
+            "action_id": record.Actions.action_id,
+            "feedback": record.Actions.feedback
+        } for record in result]
+
+        # 結果をJSONで返す
+        return jsonify(result_dict_list)
+
+    except DBAPIError as e:
+        return jsonify({"error": str(e)}), 500
+    
 #Daily Report接続用のAPI　POSTで設定　///山脇追加分   //動作確認済
 @app.route('/get_daily_records', methods=['POST'])
 def get_daily_records():
@@ -137,10 +165,10 @@ def get_daily_records():
 
 
 # frontend側のfetchtest用のAPI。jsonplaceholderというサービスを利用。
-@app.route("/fetchtest")
-def fetchtest():
-    response = requests.get('https://jsonplaceholder.typicode.com/users')
-    return response.json(), 200
+# @app.route("/fetchtest")
+# def fetchtest():
+#     response = requests.get('https://jsonplaceholder.typicode.com/users')
+#     return response.json(), 200
 
 
 if __name__ == '__main__':

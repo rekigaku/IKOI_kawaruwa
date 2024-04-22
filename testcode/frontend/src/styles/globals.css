@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+/* Progress bar styles */
+.progress-bar-container {
+    /* Ensure the container is relative for absolute positioning of percentage text */
+    position: relative;
+  }
+  
+  
+  .progress-bar::after {
+    /* Position the percentage text in the center of the progress bar */
+    content: attr(data-label);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+
+  .progress-bar {
+    width: 40%; /* プログレスの幅 */
+    background: linear-gradient(90deg, #948bbd 50%, #5ba5eb 100%); /* グラデーションの設定 */
+    text-align: center; /* テキストの位置 */
+    line-height: 2rem; /* ラインの高さ */
+    color: white; /* テキストの色 */
+  }
