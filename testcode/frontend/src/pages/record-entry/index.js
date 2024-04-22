@@ -110,7 +110,7 @@ const ActionSection = ({ title, actionIds, handleClick, bgColor = 'bg-white' }) 
 );
 
 return (
-  <div className="max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-lg p-5">
+  <div className="max-w-lg mx-auto mt-8 bg-white shadow-lg rounded-lg p-5 mb-10">
     <div className="form-control mb-4">
       <input
         className="input input-bordered w-full"
@@ -136,7 +136,7 @@ return (
       </>
     )}
 
-    <div className="flex justify-center items-center mt-8">
+    <div className="flex justify-center items-center mt-8 mb-5">
       <button
         className="btn btn-primary btn-active btn-block text-xl text-white"
         type="button"

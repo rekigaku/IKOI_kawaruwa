@@ -14,6 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <div className={`${styles.container} ${inter.className}`} lang="jp">
+      
       {/* Header content */}
       <header className={`navbar ${styles.navbar}`}>
         <div className="navbar-start">
@@ -23,6 +24,9 @@ export default function RootLayout({ children }) {
         </div>
         
         <div className="navbar-end">
+          <Link href="/login" passHref>
+            <button className="btn text-base mr-7">Login</button>
+          </Link>
           <Link href="/record-entry" passHref>
             <button className="btn text-base mr-7">Record</button>
           </Link>
