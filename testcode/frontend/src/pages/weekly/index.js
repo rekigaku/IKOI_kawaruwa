@@ -23,7 +23,7 @@ export default function ApiViewer() {
    const totalActions = apiData
    ? Object.values(apiData.counts).reduce((total, num) => total + num, 0)
    : 0;
-   const progressPercentage = (totalActions / 50) * 100;
+   const progressPercentage = (totalActions / 25) * 100;
 
 
    return (
